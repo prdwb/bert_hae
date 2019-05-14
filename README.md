@@ -2,12 +2,12 @@
 
 ## History Answer Embedding
 
-Incorporate history turns with history answer embedding (HAE) to a (BERT)[https://github.com/google-research/bert] based machine comprehension model. Paper link: to be updated
+Incorporate history turns with history answer embedding (HAE) to a [BERT](https://github.com/google-research/bert) based machine comprehension model. Paper link: to be updated
 
 ### Run
 
-1. Download the `BERT-base Uncased` model (here)[https://github.com/google-research/bert].
-2. Download the (QuAC)[http://quac.ai/] data.
+1. Download the `BERT-base Uncased` model [here](https://github.com/google-research/bert).
+2. Download the [QuAC](http://quac.ai/) data.
 3. Configurate the directories for the BERT model and data in `cqa_flags.py`. Also, specify a cache directory in it.
 4. Run (with optimal hyper-parameters)
 
