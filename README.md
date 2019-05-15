@@ -4,7 +4,10 @@ This is the implementation for the "BERT + History Answer Embedding" model propo
 
 If you use this code for your paper, please cite it as  
 ```
-Chen Qu, Liu Yang, Minghui Qiu, W. Bruce Croft, Yongfeng Zhang and Mohit Iyyer. BERT with History Answer Embedding for Conversational Question Answering. In Proceedings of the 42nd International ACM SIGIR Conference on Research & Development in Information Retrieval (SIGIR 2019).
+Chen Qu, Liu Yang, Minghui Qiu, W. Bruce Croft, Yongfeng Zhang and Mohit Iyyer.  
+BERT with History Answer Embedding for Conversational Question Answering.  
+In Proceedings of the 42nd International ACM SIGIR Conference on Research & Development  
+in Information Retrieval (SIGIR 2019).
 
 Bibtext
 @inproceedings{bert_hae,
