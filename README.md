@@ -1,8 +1,19 @@
 # BERT with History Answer Embedding for Conversational Question Answering
 
-## History Answer Embedding
+This is the implementation for the "BERT + History Answer Embedding" model proposed in the SIGIR'19 paper [BERT with History Answer Embedding for Conversational Question Answering](https://arxiv.org/abs/1905.05412). This model incorporates history turns with history answer embedding (HAE) to a [BERT](https://github.com/google-research/bert) based machine comprehension model.  
 
-Incorporate history turns with history answer embedding (HAE) to a [BERT](https://github.com/google-research/bert) based machine comprehension model. Paper link: to be updated
+If you use this code for your paper, please cite it as  
+```
+Chen Qu, Liu Yang, Minghui Qiu, W. Bruce Croft, Yongfeng Zhang and Mohit Iyyer. BERT with History Answer Embedding for Conversational Question Answering. In Proceedings of the 42nd International ACM SIGIR Conference on Research & Development in Information Retrieval (SIGIR 2019).
+
+Bibtext
+@inproceedings{bert_hae,
+	author = {Qu, C. and Yang, L. and Qiu, M. and Croft, W. B. and Zhang, Y. and Iyyer, M.},
+	title = {BERT with History Answer Embedding for Conversational Question Answering},
+	booktitle = {SIGIR '19},
+	year = {2019},
+}
+```
 
 ### Run
 
