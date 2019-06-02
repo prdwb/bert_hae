@@ -835,7 +835,7 @@ def convert_examples_to_example_variations(examples, max_considered_history_turn
     return new_examples
 
 def convert_examples_to_variations_and_then_features(examples, tokenizer, max_seq_length, 
-                                doc_stride, max_query_length, max_considered_history_turns, glove, tfidf_vectorizer, is_training):
+                                doc_stride, max_query_length, max_considered_history_turns, is_training):
     # different from the "convert_examples_to_features" in cqa_supports.py, we return two masks with the feature (example/variaton trackers).
     # the first mask is the example index, and the second mask is the variation index. Wo do this to keep track of the features generated
     # by different examples and variations.
@@ -844,7 +844,7 @@ def convert_examples_to_variations_and_then_features(examples, tokenizer, max_se
     example_features_nums = [] # keep track of how many features are generated from the same example (regardless of example variations)
     example_tracker = []
     variation_tracker = []
-    matching_signals_dict = {}
+    # matching_signals_dict = {}
     unique_id = 1000000000
     
     
@@ -863,8 +863,8 @@ def convert_examples_to_variations_and_then_features(examples, tokenizer, max_se
         variations = convert_examples_to_example_variations([example], max_considered_history_turns)
         for variation_index, variation in enumerate(variations):
             features = convert_examples_to_features([variation], tokenizer, max_seq_length, doc_stride, max_query_length, is_training)
-            matching_signals = extract_matching_signals(variation, glove, tfidf_vectorizer)
-            matching_signals_dict[(example_index, variation_index)] = matching_signals
+            # matching_signals = extract_matching_signals(variation, glove, tfidf_vectorizer)
+            # matching_signals_dict[(example_index, variation_index)] = matching_signals
             
             # the example_index and unique_id in features are wrong due to the generation of example variations.
             # we fix them here.
@@ -881,7 +881,7 @@ def convert_examples_to_variations_and_then_features(examples, tokenizer, max_se
         example_features_nums.append(example_features_num[0]) 
     assert len(all_features) == len(example_tracker)
     assert len(all_features) == len(variation_tracker)
-    return all_features, example_tracker, variation_tracker, example_features_nums, matching_signals_dict
+    return all_features, example_tracker, variation_tracker, example_features_nums
 
 
 
