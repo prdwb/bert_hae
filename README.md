@@ -35,7 +35,8 @@ python hae.py \
     --learning_rate=3e-05 \
     --warmup_proportion=0.1 \
     --evaluation_steps=1000 \
-    --evaluate_after=18000
+    --evaluate_after=18000 \
+    --load_small_portion=False
 ```
 
 ### Some program arguments
