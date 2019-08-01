@@ -23,7 +23,7 @@ Bibtext
 1. Download the `BERT-base Uncased` model [here](https://github.com/google-research/bert).
 2. Download the [QuAC](http://quac.ai/) data.
 3. Configurate the directories for the BERT model and data in `cqa_flags.py`. Also, specify a cache directory in it.
-4. Run (with optimal hyper-parameters)
+4. Run 
 
 ```
 python hae.py \
@@ -36,8 +36,10 @@ python hae.py \
     --warmup_proportion=0.1 \
     --evaluation_steps=1000 \
     --evaluate_after=18000 \
-    --load_small_portion=False
+    --load_small_portion=False \
+    --train_batch_size=12
 ```
+Setting the max_seq_length to 512 and max_answer_length to 40 or 50 should give better results.
 
 ### Some program arguments
 
