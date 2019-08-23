@@ -27,7 +27,7 @@ Bibtext
 
 ```
 python hae.py \
-    --output_dir=OUTPUT_DIR  \
+    --output_dir=OUTPUT_DIR/  \
     --history=6 \
     --num_train_epochs=3.0 \
     --train_steps=24000 \
@@ -37,9 +37,13 @@ python hae.py \
     --evaluation_steps=1000 \
     --evaluate_after=18000 \
     --load_small_portion=False \
-    --train_batch_size=12
+    --train_batch_size=12 \
+    --max_answer_length=40
 ```
-Setting the max_seq_length to 512 and max_answer_length to 40 or 50 should give better results.
+Setting the max_seq_length to 512 should give better results.
+
+5. During training, you can monitor it via tensorboard, the log directory is the `summaries` under the output directory.
+6. After training, the best result is stored in the `results.txt` under the output directory. Also look at `step_results.txt` under the same directory to see at what step we get the best result.
 
 ### Some program arguments
 
