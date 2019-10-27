@@ -145,26 +145,18 @@ def read_quac_examples(input_file, is_training):
             question_with_histories = ''
             
             history_answer_marker = None
-            if FLAGS.use_history_answer_marker:
-                start_index = 0 # we read all the histories no matter we use RL or not. we will make approporiate selections afterwards
-                history_answer_marker = []
-                for history_turn, (each_answer, each_question) in enumerate(
-                    zip(answers[start_index: end_index], questions[start_index: end_index])):
-                    
-                    # [history_answer_start, history_answer_end, history_answer_text]
-                    each_marker = [each_answer[1], each_answer[1] + len(each_answer[0]), each_answer[0]]
-                    history_answer_marker.append(each_marker)
-                    metadata['history_turns'].append(history_turn + start_index + 1)
-                    metadata['history_turns_text'].append((each_question[0], each_answer[0])) #[(q1, a1), (q2, a2), ...]
-            else:
-                # prepend historical questions and answers
-                start_index = max(end_index - FLAGS.history, 0)
-                if FLAGS.only_history_answer:
-                    for each_answer in answers[start_index: end_index]:
-                        question_with_histories += each_answer[0] + ' '
-                else:
-                    for each_question, each_answer in zip(questions[start_index: end_index], answers[start_index: end_index]):
-                        question_with_histories += each_question[0] + ' ' + each_answer[0] + ' '
+
+            start_index = 0 # we read all the histories no matter we use RL or not. we will make approporiate selections afterwards
+            history_answer_marker = []
+            for history_turn, (each_answer, each_question) in enumerate(
+                zip(answers[start_index: end_index], questions[start_index: end_index])):
+
+                # [history_answer_start, history_answer_end, history_answer_text]
+                each_marker = [each_answer[1], each_answer[1] + len(each_answer[0]), each_answer[0]]
+                history_answer_marker.append(each_marker)
+                metadata['history_turns'].append(history_turn + start_index + 1)
+                metadata['history_turns_text'].append((each_question[0], each_answer[0])) #[(q1, a1), (q2, a2), ...]
+            
             # add the current question
             question_with_histories += question[0]
             qas.append({'id': question[1], 'question': question_with_histories, 'answers': [{'answer_start': answer[1], 'text': answer[0]}],
@@ -206,28 +198,28 @@ def read_quac_examples(input_file, is_training):
             # we construct a tok_history_answer_marker to store the aggregated history answer markers for a question.
             # we also construct each_tok_history_answer_marker to store a single history answer marker.
             tok_history_answer_marker = [0] * len(doc_tokens)
-            if FLAGS.use_history_answer_marker:
-                for marker_index, marker in enumerate(qa['history_answer_marker']):
-                    each_tok_history_answer_marker = [0] * len(doc_tokens)
-                    history_orig_answer_text = marker[2]
-                    history_answer_offset = marker[0]
-                    history_answer_length = len(history_orig_answer_text)
-                    history_start_position = char_to_word_offset[history_answer_offset]
-                    history_end_position = char_to_word_offset[history_answer_offset + history_answer_length - 1]
-                    history_actual_text = " ".join(doc_tokens[history_start_position:(history_end_position + 1)])
-                    history_cleaned_answer_text = " ".join(tokenization.whitespace_tokenize(history_orig_answer_text))
-                    if history_actual_text.find(history_cleaned_answer_text) != -1:
-                        tok_history_answer_marker = tok_history_answer_marker[: history_start_position] + \
-                                            [1] * (history_end_position - history_start_position + 1) + \
-                                            tok_history_answer_marker[history_end_position + 1 :]
-                        each_tok_history_answer_marker = each_tok_history_answer_marker[: history_start_position] + \
-                                            [1] * (history_end_position - history_start_position + 1) + \
-                                            each_tok_history_answer_marker[history_end_position + 1 :]
-                        assert len(tok_history_answer_marker) == len(doc_tokens)
-                        assert len(each_tok_history_answer_marker) == len(doc_tokens)
-                        qa['metadata']['tok_history_answer_markers'].append(each_tok_history_answer_marker)
-                    else:
-                        tf.logging.warning("Could not find history answer: '%s' vs. '%s'", history_actual_text, history_cleaned_answer_text)                                    
+
+            for marker_index, marker in enumerate(qa['history_answer_marker']):
+                each_tok_history_answer_marker = [0] * len(doc_tokens)
+                history_orig_answer_text = marker[2]
+                history_answer_offset = marker[0]
+                history_answer_length = len(history_orig_answer_text)
+                history_start_position = char_to_word_offset[history_answer_offset]
+                history_end_position = char_to_word_offset[history_answer_offset + history_answer_length - 1]
+                history_actual_text = " ".join(doc_tokens[history_start_position:(history_end_position + 1)])
+                history_cleaned_answer_text = " ".join(tokenization.whitespace_tokenize(history_orig_answer_text))
+                if history_actual_text.find(history_cleaned_answer_text) != -1:
+                    tok_history_answer_marker = tok_history_answer_marker[: history_start_position] + \
+                                        [1] * (history_end_position - history_start_position + 1) + \
+                                        tok_history_answer_marker[history_end_position + 1 :]
+                    each_tok_history_answer_marker = each_tok_history_answer_marker[: history_start_position] + \
+                                        [1] * (history_end_position - history_start_position + 1) + \
+                                        each_tok_history_answer_marker[history_end_position + 1 :]
+                    assert len(tok_history_answer_marker) == len(doc_tokens)
+                    assert len(each_tok_history_answer_marker) == len(doc_tokens)
+                    qa['metadata']['tok_history_answer_markers'].append(each_tok_history_answer_marker)
+                else:
+                    tf.logging.warning("Could not find history answer: '%s' vs. '%s'", history_actual_text, history_cleaned_answer_text)                                    
 
             example = CQAExample(
                 qas_id=qas_id,

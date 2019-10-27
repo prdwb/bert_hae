@@ -29,7 +29,7 @@ flags.DEFINE_string("vocab_file", "/mnt/scratch/chenqu/bert/uncased_L-12_H-768_A
                     "The vocabulary file that the BERT model was trained on.")
 
 flags.DEFINE_string(
-    "output_dir", "/mnt/scratch/chenqu/bert_out/57/",
+    "output_dir", "/mnt/scratch/chenqu/bert_out/xxx/",
     "The output directory where the model checkpoints will be written.")
 
 flags.DEFINE_string("quac_train_file", "/mnt/scratch/chenqu/quac_original/train_v0.2.json",
@@ -141,16 +141,6 @@ flags.DEFINE_integer(
     "history", 6,
     "Number of conversation history to use. "
 )
-
-
-flags.DEFINE_bool(
-    "only_history_answer", True,
-    "only prepend history answers without questions?")
-
-flags.DEFINE_bool(
-    "use_history_answer_marker", True,
-    "use markers for hisotory answers instead of prepending them."
-    "This referes to HAE in our implementation. This flag surpasses the only_history_answer flag.")
 
 flags.DEFINE_bool(
     "load_small_portion", True,
